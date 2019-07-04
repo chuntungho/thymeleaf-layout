@@ -1,0 +1,9 @@
+spring:
+  thymeleaf:
+    prefix: /templates/page/
+    suffix: .html
+    cache: false
+server:
+  tomcat:
+    access_log_enabled: true
+    basedir: target/tomcat
