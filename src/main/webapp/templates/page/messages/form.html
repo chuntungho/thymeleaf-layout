@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-      th:replace="../layout/base::html (#{form.title},  _, ~{::#content})">
+      th:replace="../layout/base::html (#{form.title},  _, ~{::content})">
 <body>
-<th:block id="content">
+<th:block th:fragment="content">
     <h4 class="float-left mt-2" th:text="#{form.title}">Messages : Create</h4>
     <div class="float-right mt-2">
         <a class="btn btn-primary btn-sm" th:href="@{/}" href="messages.html" th:text="#{form.messages}"> Messages </a>
