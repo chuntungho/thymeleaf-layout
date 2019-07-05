@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/")
 public class MessageController {
 
+	public static final String ACTION = "_action";
 	private final MessageRepository messageRepository;
 
 	public MessageController(MessageRepository messageRepository) {
@@ -53,8 +54,8 @@ public class MessageController {
 	}
 
 	@GetMapping(params = "form")
-	public String createForm(@ModelAttribute Message message) {
-		return "messages/form";
+	public ModelAndView createForm(@ModelAttribute("message") Message message) {
+		return new ModelAndView("messages/form", ACTION, "create");
 	}
 
 	@PostMapping
@@ -62,8 +63,9 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return new ModelAndView("messages/form", "formErrors", result.getAllErrors());
 		}
+		String prompt = message.getId() == null ? "view.success.created" : "view.success.modified";
 		message = this.messageRepository.save(message);
-		redirect.addFlashAttribute("globalMessage", "view.success");
+		redirect.addFlashAttribute("globalMessage", prompt);
 		return new ModelAndView("redirect:/{message.id}", "message.id", message.getId());
 	}
 
@@ -81,7 +83,8 @@ public class MessageController {
 
 	@GetMapping("modify/{id}")
 	public ModelAndView modifyForm(@PathVariable("id") Message message) {
-		return new ModelAndView("messages/form", "message", message);
+		return new ModelAndView("messages/form", ACTION, "modify")
+				.addObject("message", message);
 	}
 
 }

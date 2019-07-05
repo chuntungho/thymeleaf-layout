@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-      th:replace="../layout/base::html (#{view.title},  _, ~{::content})">
+      th:replace="../layout/base::html (#{view.title},  _, ~{::btnFragment}, ~{::content})">
 <body>
-<th:block th:fragment="content">
-    <h4 class="float-left mt-2" th:text="#{view.title}">Messages : View</h4>
-    <div class="float-right mt-2">
-        <a class="btn btn-primary btn-sm" href="list.html" th:href="@{/}" th:text="#{view.messages}">Messages</a>
-    </div>
+<th:block th:fragment="btnFragment">
+    <a class="btn btn-primary btn-sm" href="list.html" th:href="@{/}" th:text="#{view.messages}">Messages</a>
+</th:block>
 
-    <div class="clearfix"></div>
+<th:block th:fragment="content">
     <div class="alert alert-success" th:if="${globalMessage}" th:text="#{${globalMessage}}">Some Success message
     </div>
 
